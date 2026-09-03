@@ -1,4 +1,4 @@
-from flask import Flask, abort, jsonify, request
+from flask import Flask, Response, abort, jsonify, request
 
 from storage import Store
 
@@ -12,7 +12,7 @@ def list_items():
 
 
 @app.post("/items")
-def create_item():
+def create_item() -> tuple[Response, int]:
     body = request.get_json(silent=True) or {}
     title = body.get("title")
     if not isinstance(title, str) or not title.strip():
