@@ -20,7 +20,8 @@ def create_item() -> tuple[Response, int]:
     tags = body.get("tags", [])
     if not isinstance(tags, list):
         abort(400, description="tags must be a list of strings")
-    item = store.create(title=title.strip(), tags=[str(t) for t in tags])
+    unique_tags = list(dict.fromkeys(str(t) for t in tags))
+    item = store.create(title=title.strip(), tags=unique_tags)
     return jsonify(item), 201
 
 
@@ -38,7 +39,7 @@ def delete_item(item_id: int):
         abort(404)
     return "", 204
 
-
+#This is simple commit
 @app.get("/search")
 def search():
     query = request.args.get("q", "").strip()
