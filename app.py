@@ -39,7 +39,7 @@ def delete_item(item_id: int):
         abort(404)
     return "", 204
 
-
+#This is simple commit
 @app.get("/search")
 def search():
     query = request.args.get("q", "").strip()
