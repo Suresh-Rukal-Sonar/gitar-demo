@@ -24,7 +24,7 @@ def create_item() -> tuple[Response, int]:
     item = store.create(title=title.strip(), tags=unique_tags)
     return jsonify({"data": item}), 201
 
-
+#added this comment
 @app.get("/items/<int:item_id>")
 def get_item(item_id: int):
     item = store.get(item_id)
