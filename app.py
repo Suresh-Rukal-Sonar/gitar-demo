@@ -20,10 +20,11 @@ def create_item() -> tuple[Response, int]:
     tags = body.get("tags", [])
     if not isinstance(tags, list):
         abort(400, description="tags must be a list of strings")
-    item = store.create(title=title.strip(), tags=[str(t) for t in tags])
-    return jsonify(item), 201
+    unique_tags = list(set(str(t) for t in tags))
+    item = store.create(title=title.strip(), tags=unique_tags)
+    return jsonify({"data": item}), 201
 
-
+#added this comment
 @app.get("/items/<int:item_id>")
 def get_item(item_id: int):
     item = store.get(item_id)
